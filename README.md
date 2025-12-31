@@ -21,36 +21,11 @@ Projeto em desenvolvimento, focado no treino de lógica de programação, estrut
 
 ---
 
-## 🚧 Funcionalidades em desenvolvimento
-
-- Total de gastos por mês
-- Definição de limite mensal
-- Exclusão de gastos
-- Melhor organização interna dos dados
-- Persistência dos dados em arquivo
-
----
-
 ## 🛠️ Tecnologias utilizadas
 
 - Python 3
 - Biblioteca padrão os
 - Aplicação em terminal (Windows)
-
----
-
-## ▶️ Como executar
-
-1. Clone o repositório:
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-
-2. Acesse a pasta do projeto:
-   cd seu-repositorio
-
-3. Execute o arquivo principal:
-   python main.py
-
-Obs: o comando `cls` é específico para Windows.
 
 ---
 
@@ -63,13 +38,6 @@ Projeto educacional com foco em:
 - Funções
 - Validação de dados
 - Organização de código
-
----
-
-## 📄 Status do projeto
-
-Em desenvolvimento.
-O código ainda está em evolução e pode sofrer mudanças estruturais.
 
 ---
 
