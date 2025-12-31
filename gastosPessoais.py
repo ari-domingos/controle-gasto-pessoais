@@ -1,310 +1,251 @@
 import os
 
-meses = ["", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
-categoria = ["", "Alimentação", "Transporte", "Moradia", "Lazer", "Cartão", "Outros"]
+# ======================= DADOS =======================
+
+meses = [
+    "", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+]
+
+categorias = [
+    "", "Alimentação", "Transporte", "Moradia", "Lazer", "Outros"
+]
 
 gastos = []
+
+# ======================= LAYOUT =======================
+
+def limpar():
+    os.system("cls")
+    
+def cabecalho(titulo):
+    limpar()
+    print("=" * 50)
+    print(titulo.center(50))
+    print("=" * 50)
+
+def pausa():
+    input("\nPressione ENTER para continuar...")
+
+# ======================= FUNÇÕES =======================
 
 def adicionarGasto():
     while True:
         try:
-            os.system("cls")
+            limpar()
+            cabecalho("ADICIONAR GASTO")
 
-            print("\n" + "-" * 31)
-            print("        ADICIONAR GASTO")
-            print("-" * 31)
-
-            print("\n---- Gasto de número (ID) ----") # ID
-            idGasto = int(input(" ID: ")) 
-
-            if idGasto < 0:
-                os.system("cls")
-
-                print("\n" + "-" * 37)
-                print("Erro: digite apenas valores positivos")
-                print("-" * 37)
-                input("  Pressione ENTER para continuar...")
+            idGasto = int(input("ID do gasto: "))
+            if idGasto <= 0:
+                print("\nID inválido.")
+                pausa()
                 continue
 
-            idDuplicado = False
             for gasto in gastos:
                 if gasto['id'] == idGasto:
-                    os.system("cls")
+                    print("\nID já existente.")
+                    print(
+                        f"\nID: {gasto['id']}"
+                        f"\nMês: {meses[gasto['mes']]}"
+                        f"\nCategoria: {categorias[gasto['categoria']]}"
+                        f"\nValor: R$ {gasto['valor']:.2f}"
+                    )
+                    pausa()
+                    return
 
-                    print("\n" + "-" * 48)
-                    print("Erro: já existe um ID com essa compra registrada")
-                    print(f"\nID: {gasto['id']}\nMês: {meses[gasto['mes']]}\nCategoria: {categoria[gasto['categoria']]}\nValor: R$ {gasto['valor']:.2f}")
-                    print("-" * 48)
-                    input("     Pressione ENTER para continuar...")     
-
-                    idDuplicado = True
-                    break
-            if idDuplicado:
-                continue       
-            
-
-            print("\n---- Valor do gasto ----") # VALOR
-            valorGasto = float(input(" R$ ")) 
-
-            if valorGasto <= 0:
-                os.system("cls")
-
-                print("\n" + "-" * 37)
-                print("Erro: digite apenas valores positivos")
-                print("-" * 37)
-                input("  Pressione ENTER para continuar...")
+            valor = float(input("Valor (R$): "))
+            if valor <= 0:
+                print("\nValor inválido.")
+                pausa()
                 continue
 
-            print("\n------------ Mês do gasto --------------") # MÊS
-            print(" 1. Janeiro    2. Fevereiro   3. Março")
-            print(" 4. Abril      5. Maio        6. Junho")
-            print(" 7. Julho      8. Agosto      9. Setembro")
-            print(" 10. Outubro   11. Novembro   12. Dezembro")
-            opcaoMes = int(input("\nEscolha o mês: "))
-            
-            if opcaoMes in (1, 2, 3, 4, 5 , 6, 7, 8, 9, 10, 11, 12):
-                print(f"Mês: {meses[opcaoMes]}")
+            print("\nMês:")
+            for m in range(1, 13):
+                print(f"{m}. {meses[m]}")
 
-            else:
-                os.system("cls")
-
-                print("\n" + "-" * 34)
-                print("Erro: digite apenas números (1-12)")
-                print("-" * 34)
-                input("Pressione ENTER para continuar...")
+            mes = int(input("\nEscolha: "))
+            if mes < 1 or mes > 12:
+                print("\nMês inválido.")
+                pausa()
                 continue
 
-            print("\n--- Categoria ---")
-            print(" 1. Alimentação")
-            print(" 2. Transporte")
-            print(" 3. Moradia")
-            print(" 4. Lazer")
-            print(" 5. Cartão")
-            print(" 6. Outros")
-            opcaoCategoria = int(input("\nEscolha a categoria: "))
+            print("\nCategoria:")
+            for c in range(1, 6):
+                print(f"{c}. {categorias[c]}")
 
-            valorAlimentacao = 0
-            valorTransporte = 0
-            valorMoradia = 0
-            valorLazer = 0
-            valorCartao = 0
-            valorOutros = 0
-
-            if opcaoCategoria == 1:
-                valorAlimentacao += valorGasto
-                print(f"Categoria {categoria[opcaoCategoria]}")
-
-            elif opcaoCategoria == 2:
-                valorTransporte += valorGasto
-                print(f"Categoria {categoria[opcaoCategoria]}")
-            
-            elif opcaoCategoria == 3:
-                valorMoradia += valorGasto
-                print(f"Categoria {categoria[opcaoCategoria]}")
-
-            elif opcaoCategoria == 4:
-                valorLazer += valorGasto
-                print(f"Categoria {categoria[opcaoCategoria]}")
-
-            elif opcaoCategoria == 5:
-                valorCartao += valorGasto
-                print(f"Categoria {categoria[opcaoCategoria]}")
-
-            elif opcaoCategoria == 6:
-                valorOutros += valorGasto
-                print(f"Categoria {categoria[opcaoCategoria]}")
-
-            else:
-                os.system("cls")
-
-                print("\n" + "-" * 33)
-                print("Erro: digite apenas números (1-6)")
-                print("-" * 33)
-                input("Pressione ENTER para continuar...")
+            categoria = int(input("\nEscolha: "))
+            if categoria < 1 or categoria > 5:
+                print("\nCategoria inválida.")
+                pausa()
                 continue
 
-            novoGasto = {
-                'id': idGasto,
-                'valor': valorGasto,
-                'mes': opcaoMes,
-                'categoria': opcaoCategoria,
-                'gastoAlimentacao': valorAlimentacao, # !!!!!!
-                'gastoTransporte': valorTransporte,
-                'gastoMoradia': valorMoradia,
-                'gastoLazer': valorLazer,
-                'gastoCartao': valorCartao,
-                'gastoOutros': valorOutros,
+            novoGasto = { 
+                "id": idGasto,
+                "valor": valor,
+                "mes": mes,
+                "categoria": categoria
             }
 
-            gastos.append(novoGasto)
-            break
+            gastos.append(novoGasto) 
+
+            print("\nGasto cadastrado com sucesso.")
+            pausa()
+            return
 
         except ValueError:
-            os.system("cls")
-
-            print("-" * 31)
-            print("  Erro: digite apenas números")
-            print("-" * 31)
-            input("Pressione ENTER para continuar...")
+            print("\nDigite apenas números.")
+            pausa()
 
 def listarGastos():
-    os.system("cls")
+    limpar()
+    cabecalho("LISTAGEM DE GASTOS")
 
-    print("\n" + "-" * 54)
-    print("                 LISTAGEM DE GASTOS")
-    print("-" * 54)
+    if not gastos:
+        print("\nNenhum gasto registrado.")
+        pausa()
+        return
 
-    print("\n    ID    |    Mês    |    Categoria    |    Valor    ")
-    print("-" * 54)
+    print(f"{'ID':<5}{'Mês':<15}{'Categoria':<15}{'Valor':>10}")
+    print("-" * 50)
+
+    for gasto in gastos:
+        print(
+            f"{gasto['id']:<5}"
+            f"{meses[gasto['mes']]:<15}"
+            f"{categorias[gasto['categoria']]:<15}"
+            f"R$ {gasto['valor']:>7.2f}"
+        )
+
+    pausa()
      
-    for gasto in gastos:
-        print(f"   {gasto['id']}   |   {meses[gasto['mes']]}   |   {categoria[gasto['categoria']]}   |   R$ {gasto['valor']:.2f}   ") # !!!!!!
+def totalGeral():
+    limpar()
+    cabecalho("TOTAL GERAL")
 
-def totalGeralGastos():
-    os.system("cls")
+    if not gastos:
+        print("\nNenhum gasto registrado.")
+        pausa()
+        return
 
-    print("\n" + "-" * 31)
-    print("          TOTAL GERAL")
-    print("-" * 31)
+    total = sum(gasto['valor'] for gasto in gastos)
+    print(f"\nTotal geral: R$ {total:.2f}")
 
-    somaTotalGeral = 0
+    pausa()
 
-    for gasto in gastos:
-        somaTotalGeral += gasto['valor']
 
-    print(f"\nTotal geral: R$ {somaTotalGeral:.2f}")
-    print('-' * 31)
+def totalPorCategoria():
+    limpar()
+    cabecalho("TOTAL POR CATEGORIA")
 
-def totalGeralCategoria():
-    os.system("cls")
+    if not gastos:
+        print("\nNenhum gasto registrado.")
+        pausa()
+        return
 
-    print("\n" + "-" * 31)
-    print("      TOTAL POR CATEGORIA")
-    print("-" * 31)
-
-    somaTotalAlimentacao = 0
-    somaTotalTransporte = 0 
-    somaTotalMoradia = 0
-    somaTotalLazer = 0
-    somaTotalCartao = 0 
-    somaTotalOutros = 0
+    totais = [0] * 6
 
     for gasto in gastos:
-        somaTotalAlimentacao += gasto['gastoAlimentacao']
-        somaTotalTransporte += gasto['gastoTransporte']
-        somaTotalMoradia += gasto['gastoMoradia']
-        somaTotalLazer += gasto['gastoLazer']
-        somaTotalCartao += gasto['gastoCartao']
-        somaTotalOutros += gasto['gastoOutros']
+        totais[gasto['categoria']] += gasto['valor']
 
-    print(f"\nAlimentação: R$ {somaTotalAlimentacao:.2f}")
-    print(f"Transporte: R$ {somaTotalTransporte:.2f}")
-    print(f"Moradia: R$ {somaTotalMoradia:.2f}")
-    print(f"Lazer: R$ {somaTotalLazer:.2f}")
-    print(f"Cartão: R$ {somaTotalCartao:.2f}")
-    print(f"Outros: R$ {somaTotalOutros:.2f}")
-    print("-" * 31)
+    for c in range(1, 6):
+        print(f"{categorias[c]:<15} : R$ {totais[c]:.2f}")
 
-def totalmes():
-    os.system("cls")
+    pausa()
 
-    print("\n" + "-" * 31)
-    print("         TOTAL POR MÊS")
-    print("-" * 31)
+def totalPorMes():
+    limpar()
+    cabecalho("TOTAL POR MÊS")  
 
-def definirLimiteMensal():
-    os.system("cls")
+    if not gastos:
+        print("\nNenhum gasto registrado.")
+        pausa()
+        return
+    
+    totais = [0] * 13
 
-    print("\n" + "-" * 31)
-    print("     DEFINIR LIMITE MENSAL")
-    print("-" * 31)
+    for gasto in gastos:
+        totais[gasto['mes']] += gasto['valor']
 
-def excluirgasto():
-    os.system("cls")
+    for m in range(1, 13):
+        print(f"{meses[m]:<12} : R$ {totais[m]:.2f}")
 
-    print("\n" + "-" * 31)
-    print("         EXCLUIR GASTO")
-    print("-" * 31)
+    pausa()
+    
+def excluirGasto():
+    limpar()
+    cabecalho("EXCLUIR GASTO")
 
-while True:
-    os.system("cls")
+    if not gastos:
+        print("\nNenhum gasto registrado.")
+        pausa()
+        return
 
-    print("\n" + "=" * 31)
-    print("  CONTROLE DE GASTOS PESSOAIS")
-    print("=" * 31)
-    print("\n 1. Adicionar gasto")
-    print(" 2. Listar gastos")
-    print(" 3. Total geral")
-    print(" 4. Total por categoria")
-    print(" 5. Total por mês")
-    print(" 6. Definir limite mensal")
-    print(" 7. Excluir gasto")
-    print(" 8. Sair")
-    print("-" * 31)
+    print(f"{'ID':<5}{'Mês':<15}{'Categoria':<15}{'Valor':>10}")
+    print("-" * 50)
+
+    for gasto in gastos:
+        print(
+            f"{gasto['id']:<5}"
+            f"{meses[gasto['mes']]:<15}"
+            f"{categorias[gasto['categoria']]:<15}"
+            f"R$ {gasto['valor']:>7.2f}"
+        )
 
     try:
-        opcaoEscolhida = int(input(" Escolha uma opção: "))
+        idExcluir = int(input("\nDigite o ID: "))
+        for gasto in gastos:
+            if gasto['id'] == idExcluir:
+                gastos.remove(gasto)
+                print("\nGasto removido com sucesso.")
+                pausa()
+                return
 
-        if opcaoEscolhida == 1:
-            adicionarGasto()
+        print("\nID não encontrado.")
+        pausa()
 
-            print("-" * 31)
-            print(" Gasto adicionado com sucesso!")
-            print("-" * 31)
-            input("Pressione ENTER para continuar...")
-
-        elif opcaoEscolhida == 2:
-            listarGastos()
-
-            print("-" * 54)
-            input("Pressione ENTER para continuar...")
-
-        elif opcaoEscolhida == 3:
-            totalGeralGastos()
-        
-            input("Pressione ENTER para continuar...")
-
-        elif opcaoEscolhida == 4:
-            totalGeralCategoria()
-
-            input("Pressione ENTER para continuar...")
-
-        elif opcaoEscolhida == 5:
-            totalmes()
-
-            input("Pressione ENTER para continuar...")
-
-        elif opcaoEscolhida == 6:
-            definirLimiteMensal()
-
-            input("Pressione ENTER para continuar...")
-
-        elif opcaoEscolhida == 7:
-            excluirgasto()
-
-            input("Pressione ENTER para continuar...")
-
-        elif opcaoEscolhida == 8:
-            os.system("cls")
-
-            print("\n" + "-" * 31)
-            print("      SAINDO DO SISTEMA...")
-            print("-" * 31 )
-            print("")
-            break
-
-        else:
-            os.system("cls")
-
-            print("\n" + "-" * 33)
-            print("Erro: digite apenas números (1-8)")
-            print("-" * 33)
-            input("Pressione ENTER para continuar...")
-            
     except ValueError:
-        os.system("cls")
+        print("\nDigite apenas números.")
+        pausa()
+     
+# ======================= MENU =======================
 
-        print("\n" + "-" * 31)
-        print("  Erro: digite apenas números")
-        print("-" * 31)
-        input("Pressione ENTER para continuar...")
+while True:
+    limpar()
+    cabecalho("CONTROLE DE GASTOS PESSOAIS")
+
+    print("1 - Adicionar gasto")
+    print("2 - Listar gastos")
+    print("3 - Total geral")
+    print("4 - Total por categoria")
+    print("5 - Total por mês")
+    print("6 - Excluir gasto")
+    print("0 - Sair")
+
+    try:
+        opcao = int(input("\nEscolha: "))
+
+        if opcao == 1:
+            adicionarGasto()
+        elif opcao == 2:
+            listarGastos()
+        elif opcao == 3:
+            totalGeral()
+        elif opcao == 4:
+            totalPorCategoria()
+        elif opcao == 5:
+            totalPorMes()
+        elif opcao == 6:
+            excluirGasto()
+        elif opcao == 0:
+            limpar()
+            print("=" * 50)            
+            print("SAINDO DO SISTEMA...".center(50))
+            print("=" * 50)            
+            break
+        else:
+            print("\nOpção inválida.")
+            pausa()
+
+    except ValueError:
+        print("\nDigite apenas números.")
+        pausa()
